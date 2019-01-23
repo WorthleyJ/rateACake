@@ -1,0 +1,62 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="head" style="text-align:center">
+  <h1>
+    {{ header }}
+  </h1>
+  <app-task *ngIf='selectedTask' [taskToShow]='selectedTask'></app-task>
+  <div class="left">
+    <h2>Submit a cake to be rated</h2>
+    <hr>
+    <form (submit)="onSubmit()">
+      <p>{{ newTask | json }}</p>
+      <input type="text" placeholder="name" name="newCake.name" [(ngModel)]="newCake.name">
+      <input type="text" placeholder="img url" name="newCake.url" [(ngModel)]="newCake.url">
+      <input type="submit" value="Create Cake">
+    </form>
+  </div>
+  <!-- <div class="main"> -->
+    <!-- <button class="B1" (click)="onButtonClick()">GET ALL TASKS</button> -->
+    <div *ngFor="let cake of cakes; let i = index" class="right">
+        <!-- <p >{{ cake.name }} <span><button (click)="cakeToShow(cake)">Show</button><button (click)="onButtonClickParams(cake._id, cake.name, cake.url)">Edit</button><button (click)="onButtonClickDelete(cake._id)">Delete</button></span> </p> -->
+        <img (click)="cakeToShow(cake)" src="{{ cakes[i].url }}" alt="img">
+        <form (submit)="onSubmitReview(cakes[i]._id)">
+          <select name="newReview.stars" [(ngModel)]="newReview.stars">
+            <option value="5">5 stars</option>
+            <option value="4">4 stars</option>
+            <option value="3">3 stars</option>
+            <option value="2">2 stars</option>
+            <option value="1">1 stars</option>
+          </select>
+
+          <input type="text" placeholder="comment" name="newReview.comment" [(ngModel)]="newReview.comment">
+          <input type="submit">
+        </form>
+    </div>
+    <app-task *ngIf="show2"></app-task>
+
+    
+  <!-- </div> -->
+
+  <!-- <div class="foot2" *ngIf="show2">
+    <p>{{currentTask.title}}</p>
+    <p>{{currentTask.description}}</p>
+  </div> -->
+  <div class="foot" *ngIf="show">
+    <form (submit)="onSubmitEdit()">
+      <p>{{ newTask | json }}</p>
+      <input type="text"  name="task.title" [(ngModel)]="currentTask.title" >
+      <input type="text"  name="task.description" [(ngModel)]="currentTask.description" >
+      <input type="submit" value="Edit Task">
+    </form>
+    <!-- <p>{{ showTitle }}</p>
+    <p>{{ showDescription }}</p> -->
+  </div>
+  <!-- <button (click)="do(event)">click</button> -->
+  <!-- <button (click)="onButtonClick()" >Click me!</button> -->
+<!-- <button (click)="onButtonClickParam(5)">Click me!</button> -->
+<!-- <button (click)="onButtonClickParams(5, 'hello')">Click me!</button> -->
+<!-- <button (click)="onButtonClickEvent($event)">Click me!</button> -->
+
+</div>
+
+<router-outlet></router-outlet>
